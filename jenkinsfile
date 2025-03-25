@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    parameters {
+        string(name: 'num1', defaultValue: '0', description: 'Enter first number')
+        string(name: 'num2', defaultValue: '0', description: 'Enter second number')
+    }
     stages{
         stage("compile"){
             steps{
@@ -9,6 +13,22 @@ pipeline {
         stage("run"){
             steps{
             sh 'java Test'
+            }
+        }
+
+        stage('Add Numbers') {
+            steps {
+                script {
+                    // Convert string parameters to integers and add them
+                    def num11 = params.num1.toInteger()
+                    def num22 = params.num2.toInteger()
+                    def sum = num1 + num2
+                    
+                    // Print the result
+                    echo "First number: ${num11}"
+                    echo "Second number: ${num22}"
+                    echo "Sum: ${sum}"
+                }
             }
         }
     }
